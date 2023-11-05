@@ -19,6 +19,7 @@ import {
     cfgSportGoalCoords,
     perimeterId,
 } from "../../setup.js";
+import { videoStartTime } from "../../js/video.js";
 
 function setUpShots() {
     // http://thenewcode.com/1068/Making-Arrows-in-SVG
@@ -94,6 +95,8 @@ function createShotFromEvent(e, point1) {
         coords2: point1 ? d3.pointer(e) : null,
         numberCol: _.findIndex(columns, { type: "shot-number" }) - 1, // subtract out checkbox column
     };
+    const videoTime = d3.select("#video").node().currentTime;
+    let time, minutes, seconds;
 
     for (let col of columns) {
         switch (col.type) {
@@ -130,6 +133,21 @@ function createShotFromEvent(e, point1) {
                     .select("#" + col.id)
                     .select("input")
                     .property("value");
+                break;
+            case "v-time":
+                time = videoTime - videoStartTime;
+                minutes = Math.floor(time / 60);
+                seconds = Math.floor(time - minutes * 60);
+                rowData[col.id] = `${minutes}:${seconds
+                    .toString()
+                    .padStart(2, "0")}`;
+                break;
+            case "video-time":
+                minutes = Math.floor(videoTime / 60);
+                seconds = Math.floor(videoTime - minutes * 60);
+                rowData[col.id] = `${minutes}:${seconds
+                    .toString()
+                    .padStart(2, "0")}`;
                 break;
             case "team":
                 specialData["teamColor"] = d3

@@ -7,6 +7,7 @@ import { setUpCSVDownloadUpload } from "./js/csv.js";
 import { setUpLegend, shotTypeLegend } from "./js/shots/legend.js";
 import { select2Dropdown } from "./js/details/widgets/widgets-special.js";
 import { cfgOtherSetup } from "./js/details/config-details.js";
+import { setupVideo } from "./js/video.js";
 
 export let sport;
 export let dataStorage;
@@ -45,6 +46,7 @@ export function setup(s) {
         setUpShots();
         setUpCSVDownloadUpload();
         setUpLegend();
+        setupVideo();
 
         d3.select("h1")
             .attr("href", "./")

@@ -94,6 +94,12 @@ function createDetailsPanel(id = "#details") {
             case "time":
                 createTimeWidget(rowId, data);
                 break;
+            case "v-time":
+                createTextField(rowId, data);
+                break;
+            case "video-time":
+                createTextField(rowId, data);
+                break;
         }
     }
     select2Dropdown();

@@ -129,6 +129,11 @@ function updateTableDescription(id = "#table-description") {
         .text(text);
 }
 
+function updateTable() {
+    updateTableFooter();
+    createPage(getStartRow(), getEndRow());
+}
+
 function createTableHeader(details) {
     createHeaderRow(details);
     createFilterRow(details);
@@ -237,4 +242,10 @@ function createPage(startRow, endRow, newRow = null) {
     }
 }
 
-export { setUpTable, createTableHeader, updateTableFooter, createPage };
+export {
+    setUpTable,
+    createTableHeader,
+    updateTableFooter,
+    createPage,
+    updateTable,
+};

@@ -1487,6 +1487,18 @@
                         { "value": "Miss" }
                     ]
                 },
+                {
+                    "type": "v-time",
+                    "title": "Time",
+                    "id": "v-time-input",
+                    "defaultValue": ""
+                },
+                {
+                    "type": "video-time",
+                    "title": "Video Time",
+                    "id": "video-time-input",
+                    "defaultValue": ""
+                },
                 { "type": "x", "title": "X", "id": "x", "noWidget": true },
                 { "type": "y", "title": "Y", "id": "y", "noWidget": true }
             ]
