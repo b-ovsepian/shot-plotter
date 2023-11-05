@@ -139,6 +139,10 @@ function copySetup() {
     return src("../setup.js").pipe(dest("../public"));
 }
 
+function copyJson() {
+    return src("../supported-sports.json").pipe(dest("../public"));
+}
+
 function copyJs() {
     return src("../js/**/*").pipe(dest("../public/js"));
 }
@@ -155,7 +159,14 @@ function build() {
     return series(
         cleanBuild,
         createPublicDir,
-        parallel(copyHtmlFiles, copyCss, copySetup, copyJs, copyResources)
+        parallel(
+            copyHtmlFiles,
+            copyCss,
+            copySetup,
+            copyJs,
+            copyResources,
+            copyJson
+        )
     );
 }
 
