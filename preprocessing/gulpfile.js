@@ -5,6 +5,7 @@ const rename = require("gulp-rename");
 const inject = require("gulp-inject");
 const del = require("del");
 const sports = require("../supported-sports.json").sports;
+const fs = require("fs-extra");
 
 const indexBanner = false;
 const banner = false;
@@ -121,6 +122,44 @@ function index() {
 function clean() {
     return del(["./card"]);
 }
+
+function createPublicDir() {
+    return fs.ensureDir("../public");
+}
+
+function copyHtmlFiles() {
+    return src("../html/**/*.html").pipe(dest("../public"));
+}
+
+function copyCss() {
+    return src("../index.css").pipe(dest("../public"));
+}
+
+function copySetup() {
+    return src("../setup.js").pipe(dest("../public"));
+}
+
+function copyJs() {
+    return src("../js/**/*").pipe(dest("../public/js"));
+}
+
+function copyResources() {
+    return src("../resources/**/*").pipe(dest("../public/resources"));
+}
+
+function cleanBuild() {
+    return del(["../public/**", "!../public"], { force: true });
+}
+
+function build() {
+    return series(
+        cleanBuild,
+        createPublicDir,
+        parallel(copyHtmlFiles, copyCss, copySetup, copyJs, copyResources)
+    );
+}
+
+exports.build = build();
 
 exports.default = parallel(
     sports.map((sport) => () => html(sport.id)),
