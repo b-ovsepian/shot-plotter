@@ -155,8 +155,23 @@ function cleanBuild() {
     return del(["../public/**", "!../public"], { force: true });
 }
 
+function start() {
+    return parallel(
+        sports.map((sport) => () => html(sport.id)),
+        series(parallel(sports.map((sport) => () => card(sport))), index, clean)
+    );
+}
+
 function build() {
     return series(
+        parallel(
+            sports.map((sport) => () => html(sport.id)),
+            series(
+                parallel(sports.map((sport) => () => card(sport))),
+                index,
+                clean
+            )
+        ),
         cleanBuild,
         createPublicDir,
         parallel(
@@ -171,8 +186,4 @@ function build() {
 }
 
 exports.build = build();
-
-exports.default = parallel(
-    sports.map((sport) => () => html(sport.id)),
-    series(parallel(sports.map((sport) => () => card(sport))), index, clean)
-);
+exports.default = start();
